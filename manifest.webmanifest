@@ -3,8 +3,8 @@
  "short_name": "Polyglot",
  "start_url": "/",
  "display": "standalone",
- "background_color": "#ECE9F4",
- "theme_color": "#ECE9F4",
+ "background_color": "#071230",
+ "theme_color": "#071230",
  "icons": [
   {
    "src": "/assets/img/icon-192.png",
