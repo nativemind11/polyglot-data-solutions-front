@@ -1,0 +1,56 @@
+/* 3D layer — depth, tilt, orbit, coverflow. Loaded after the main stylesheet. */
+@keyframes pdsSwing{from{transform:perspective(260px) rotateY(-38deg)}to{transform:perspective(260px) rotateY(38deg)}}
+@keyframes pdsShine{0%,60%{left:-60%}100%{left:130%}}
+@keyframes pdsOrbit{to{transform:rotateY(-360deg)}}
+@keyframes pdsCore{to{background-position:200px 0,0 0}}
+
+/* tilt targets */
+.tilt3d{will-change:transform}
+
+/* hero depth */
+.globe-wrap{transform-style:preserve-3d;transition:transform .35s ease-out}
+.hero .fc-1{translate:calc(var(--px,0)*26px) calc(var(--py,0)*18px)}
+.hero .fc-2{translate:calc(var(--px,0)*-20px) calc(var(--py,0)*-14px)}
+.hero .fc-3{translate:calc(var(--px,0)*34px) calc(var(--py,0)*-22px)}
+
+/* trust bar under the hero */
+.trustbar{position:relative;z-index:3;display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:center;align-items:center;width:min(980px,100% - 48px);margin:-34px auto 0;padding:18px 28px;border-radius:999px;background:#fff;border:1px solid var(--line);box-shadow:0 30px 60px -24px rgba(15,40,100,.45),0 2px 0 #fff inset;transform:perspective(1000px) rotateX(5deg)}
+.trustbar .tb-lbl{font:800 .74rem var(--font-head);letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+.trustbar a{display:inline-flex;align-items:center;gap:8px;font:700 .95rem var(--font-head);color:var(--ink);text-decoration:none}
+.trustbar a .icon{width:1.2em;height:1.2em;color:var(--teal)}
+.trustbar a:hover{color:var(--blue)}
+
+/* certificates: swinging 3D seal + light sweep */
+.cert{position:relative;overflow:hidden;transform-style:preserve-3d}
+.cert .cert-seal{box-shadow:0 0 0 4px rgba(31,107,255,.14),0 10px 20px -6px rgba(31,107,255,.65);animation:pdsSwing 3.4s ease-in-out infinite alternate}
+.cert:after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.75),transparent);transform:skewX(-20deg);animation:pdsShine 6s ease-in-out infinite;pointer-events:none}
+
+/* testimonials: 3D coverflow (grid stays as the no-JS fallback) */
+.testi{position:relative}
+.testi figcaption{display:flex;align-items:center;gap:14px}
+.testi .av{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font:800 .95rem var(--font-head);color:#fff;background:var(--grad);box-shadow:0 8px 16px -6px rgba(31,107,255,.6),inset 0 -4px 8px rgba(0,0,0,.18)}
+.testis.cover{display:block;position:relative;height:330px;perspective:1500px;margin-top:40px}
+.testis.cover .testi{position:absolute;left:50%;top:0;margin:0;width:min(88%,410px);min-height:270px;display:flex;flex-direction:column;justify-content:space-between;background:#fff;box-shadow:var(--shadow);transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .6s ease;backface-visibility:hidden}
+.cover-nav{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:26px}
+.cover-nav button{width:46px;height:46px;border-radius:50%;border:1px solid var(--line-2);background:#fff;color:var(--ink);font:700 1.5rem/1 var(--font-head);cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .2s,background .2s,color .2s}
+.cover-nav button:hover{background:var(--blue);color:#fff;transform:translateY(-2px)}
+.cv-dots{display:flex;gap:8px}
+.cv-dots i{width:9px;height:9px;border-radius:50%;background:var(--line-2);cursor:pointer;transition:all .3s}
+.cv-dots i.on{width:26px;border-radius:6px;background:var(--blue)}
+
+/* language orbit */
+.orbit{position:relative;height:380px;margin-top:30px;perspective:1500px;overflow:hidden;--r:350px}
+.orbit-floor{position:absolute;left:50%;bottom:-70px;width:1000px;height:460px;margin-left:-500px;transform:perspective(620px) rotateX(70deg);background:repeating-linear-gradient(0deg,rgba(125,179,255,.22) 0 1px,transparent 1px 46px),repeating-linear-gradient(90deg,rgba(125,179,255,.22) 0 1px,transparent 1px 46px);-webkit-mask-image:radial-gradient(closest-side,#000 25%,transparent 100%);mask-image:radial-gradient(closest-side,#000 25%,transparent 100%)}
+.orbit-core{position:absolute;left:50%;top:44%;width:112px;height:112px;margin:-56px 0 0 -56px;border-radius:50%;background:repeating-linear-gradient(90deg,rgba(255,255,255,.16) 0 1px,transparent 1px 28px),radial-gradient(circle at 35% 30%,#9cc4ff,#1f6bff 48%,#071230 90%);background-size:200px 100%,100% 100%;box-shadow:0 0 70px 14px rgba(31,107,255,.45),inset -14px -14px 28px rgba(0,0,0,.45);animation:pdsCore 9s linear infinite}
+.orbit-tilt{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(-13deg)}
+.ring{position:absolute;left:50%;top:48%;width:0;height:0;transform-style:preserve-3d;animation:pdsOrbit 38s linear infinite}
+.orbit:hover .ring{animation-play-state:paused}
+.o-card{position:absolute;left:-82px;top:-48px;width:164px;height:96px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border-radius:18px;background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.04));border:1px solid rgba(125,179,255,.4);backdrop-filter:blur(6px);box-shadow:0 20px 40px -18px #000a;backface-visibility:hidden;transform:rotateY(calc(var(--i)*30deg)) translateZ(var(--r))}
+.o-card b{font:800 1.05rem var(--font-head);color:#fff}
+.o-card small{font:600 .9rem var(--font-head);color:#9fc4ff}
+
+@media(max-width:720px){
+ .orbit{height:320px;--r:250px}.o-card{left:-60px;top:-38px;width:120px;height:76px}.o-card b{font-size:.9rem}.o-card small{font-size:.78rem}
+ .testis.cover{height:400px}.trustbar{border-radius:26px;transform:none}
+}
+@media(prefers-reduced-motion:reduce){.ring,.orbit-core,.cert .cert-seal,.cert:after{animation:none}.globe-wrap{transition:none}}
